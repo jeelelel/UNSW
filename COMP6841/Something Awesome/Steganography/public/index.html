@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>COMP6841: Something Awesome - Steganography</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css'>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<div class="blog-slider">
+	<div class="blog-slider__wrp swiper-wrapper">
+
+		<!-- Photo Steganography Section -->
+		<div class="blog-slider__item swiper-slide">
+			<div class="blog-slider__img">
+				<img src="https://nordvpn.com/wp-content/uploads/blog-steganography.svg" alt="">
+			</div>
+			<div class="blog-slider__content">
+				<span class="blog-slider__code">Photo Steganography</span>
+
+				<!-- Generate Random Key -->
+				<div class="blog-slider__title">Insert your Secret Key or Get your Random Secret Key</div>
+				<input class ="user-input-key" id="photo-key">
+				<button class="random-key" onclick="generateRandomKey('photo-key')">Random Key</button>
+
+				<!-- Encode Photo -->
+				<div class="blog-slider__title">Insert or Generate your Encoded Photo</div>
+				<form id="encode-photo-form" enctype="multipart/form-data">
+					<input type="file" name="file" id="photo-file">
+					<button type="submit">Encode Photo</button>
+                    <button id="encode-random-photo">Download Random Photo to Encode</button>
+				</form>
+
+				<!-- Decode Photo -->
+				<div class="blog-slider__title">Decode your Photo</div>
+				<!-- Loading Bar -->
+				<div id="loading-bar">
+    				<div class="progress"></div>
+				</div>
+				<form id="decode-photo-form" enctype="multipart/form-data">
+					<input type="file" name="file" id="photo-decode-file">
+					<button type="submit">Decode Photo</button>
+				</form>
+				<!-- Loading Spinner -->
+                <div id="loading-spinner" style="display:none;">
+                    <p>Encoding... Please wait.</p>
+                    <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading" width="50">
+                </div>
+
+                <!-- Success Pop-up -->
+                <div id="success-popup" style="display:none;">
+                    <p>Download started!</p>
+                </div>
+
+                <!-- Display Decoded Message -->
+                <div id="decoded-message"></div>
+			</div>
+		</div>
+
+        <!-- Audio Steganography Section -->
+        <div class="blog-slider__item swiper-slide">
+            <div class="blog-slider__img">
+                <img src="https://img.freepik.com/premium-vector/people-recording-listening-podcast-audio-3d-isometric_175634-28488.jpg?w=360" alt="">
+            </div>
+            <div class='blog-slider__content'>
+                <span class='blog-slider__code'>Audio Steganography</span>
+
+                <!-- Generate Random Key -->
+                <div class='blog-slider__title'>Insert your Secret Key or Get your Random Secret Key </div>
+                <input class='user-input-key' id='audio-key'>
+                <button class='random-key' onclick='generateRandomKey("audio-key")'>Random Key</button>
+
+                <!-- Encode Audio -->
+                <div class='blog-slider__title'>Insert or Generate your Encoded Audio </div>
+                <form id='encode-audio-form' enctype='multipart/form-data'>
+            
+                    <input type='file' name='file' id='audio-file'>
+                    <button type='submit'>Encode Audio</button>
+                </form>
+                <!-- Loading Spinner -->
+                <div id="loading-spinner" style="display:none;">
+                    <p>Encoding... Please wait.</p>
+                    <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading" width="50">
+                </div>
+
+                <!-- Success Pop-up -->
+                <div id="success-popup" style="display:none;">
+                    <p>Download started!</p>
+                </div>
+
+                <!-- Decode Audio -->
+                <div class='blog-slider__title'>Decode your Audio </div>
+                <form id='decode-audio-form' enctype='multipart/form-data'>
+                    <input type='file' name='file' id='audio-decode-file'>
+                    <button type='submit'>Decode Audio</button>
+                </form>
+
+                <!-- Display Decoded Message -->
+                <div id="decoded-message-audio" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Video Steganography Section -->
+        <div class="blog-slider__item swiper-slide">
+            <div class="blog-slider__img">
+                <img src='https://us.123rf.com/450wm/cosmaa/cosmaa2206/cosmaa220600210/187031644-cartoon-vector-illustration-of-blogger-woman-people-watch-show-over-dark-background.jpg?ver=6' alt="">
+            </div>
+            <div class='blog-slider__content'>
+                <span class='blog-slider__code'>Video Steganography (UPCOMING FEATURES) </span>
+
+                <!-- Video Steganography Section -->
+                <div class='blog-slider__title'>Insert your Secret Key or Get your Random Secret Key</div>
+                <input class='user-input-key' id='video-key'>
+                <button class='random-key' onclick='generateRandomKey("video-key")'>Random Key</button>
+
+                <!-- Encode Video -->
+                <div class='blog-slider__title'>Insert or Generate your Encoded Video </div>
+                <form id='encode-video-form' enctype='multipart/form-data'>
+                    <input type='file' name='file' id='video-file'>
+                    <button type='submit'>Encode Video</button>
+                </form>
+                <!-- Loading Spinner -->
+                <div id="video-loading-spinner" style="display:none;">
+                    <p>Encoding... Please wait.</p>
+                    <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading" width="50">
+                </div>
+                <!-- Success Pop-up -->
+                <div id="video-success-popup" style="display:none;">
+                    <p>Download started!</p>
+                </div>
+                <!-- Decode Video -->
+                <div class='blog-slider__title'>Decode your Video </div>
+                <form id='decode-video-form' enctype='multipart/form-data'>
+                    <input type='file' name='file' id='video-decode-file'>
+                    <button type='submit'>Decode Video</button>
+                </form>
+                <!-- Display Decoded Message -->
+                <div id="video-decoded-message" style="display:none;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Pagination (for Swiper) -->
+    <div class='blog-slider__pagination'></div>
+
+    <!-- Swiper JS and Custom Script -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js'></script>
+
+    <!-- Custom Script for Form Handling -->
+    <script src='./script.js'></script>
+
+    <!-- JavaScript for handling form submissions and random key generation -->
+    <script>
+// Function to generate a random key
+// Function to generate a random key (password)
+function generateRandomKey(inputId) {
+    const randomKey = generateStrongPassword();  // Call password generator function
+    document.getElementById(inputId).value = randomKey;  // Set the generated key in the input field
+    console.log(`Generated Random Key: ${randomKey}`);  // Log the generated key for debugging
+}
+
+// Password generation function
+function generateStrongPassword(length = 14) {
+    if (length < 12) {
+        alert("Password length should be at least 12 characters");
+        return '';
+    }
+
+    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const digits = '0123456789';
+    const symbols = '!@#$%^&*()_+[]{}|;:,.<>?';
+
+    let password = [
+        lowercase[Math.floor(Math.random() * lowercase.length)],
+        uppercase[Math.floor(Math.random() * uppercase.length)],
+        digits[Math.floor(Math.random() * digits.length)],
+        symbols[Math.floor(Math.random() * symbols.length)]
+    ];
+
+    const allCharacters = lowercase + uppercase + digits + symbols;
+
+    for (let i = password.length; i < length; i++) {
+        password.push(allCharacters[Math.floor(Math.random() * allCharacters.length)]);
+    }
+
+    // Shuffle the password array
+    password = password.sort(() => Math.random() - 0.5);
+
+    return password.join('');
+}
+
+document.getElementById('encode-random-photo').addEventListener('click', async function() {
+  let secretKey = document.getElementById('secret-key-input').value; // Get user input from form (if any)
+  
+  if (!secretKey) {
+    // If no secret key is provided by the user, generate one
+    secretKey = generateStrongPassword(); 
+  }
+
+  const formData = new FormData();
+  formData.append('secretKey', secretKey); // Append generated or user-provided secret key
+
+  document.getElementById('loading-spinner').style.display = 'block'; // Show loading spinner
+
+  try {
+    const response = await fetch('/encode-random-photo', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'encoded_random_photo.png'; // Default filename for download
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+      alert(`Random photo encoded successfully with secret key: ${secretKey}`);
+    } else {
+      alert("Failed to encode random photo.");
+    }
+  } catch(error) {
+    console.error("Error:", error);
+    alert("An error occurred while encoding the random photo.");
+  } finally {
+    document.getElementById('loading-spinner').style.display = 'none'; // Hide spinner after process ends
+  }
+});
+
+
+// Client-side file validation
+function validateFileInput(fileInput, allowedTypes, maxSizeMB) {
+    const file = fileInput.files[0];
+    if (!file) {
+        alert("No file selected.");
+        return false;
+    }
+
+    // Validate file type
+    const fileType = file.type;
+    if (!allowedTypes.includes(fileType)) {
+        alert(`Invalid file type. Allowed types: ${allowedTypes.join(', ')}`);
+        return false;
+    }
+
+    // Validate file size
+    const maxSizeBytes = maxSizeMB * 1024 * 1024;
+    if (file.size > maxSizeBytes) {
+        alert(`File size exceeds the limit of ${maxSizeMB} MB.`);
+        return false;
+    }
+
+    return true;
+}
+
+// Handle form submission for encoding photo
+document.getElementById('encode-photo-form').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent default form submission behavior
+    
+    const formData = new FormData();
+    formData.append('file', document.getElementById('photo-file').files[0]);
+    formData.append('secretKey', document.getElementById('photo-key').value);
+
+    // Show loading spinner
+	document.getElementById('loading-spinner').style.display = 'block';
+
+	try {
+        const response = await fetch('/encode-photo', { method: 'POST', body: formData });
+        
+        if (response.ok) {
+            // Create a temporary link element to trigger download
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'encoded_image.png'; // Default filename for download
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+			document.getElementById('loading-spinner').style.display = 'none'; // Hide loading spinner
+
+			document.getElementById('success-popup').style.display = 'block'; // Show success popup
+			setTimeout(() => {
+			    document.getElementById('success-popup').style.display = 'none'; // Hide after 3 seconds
+			}, 3000);
+
+        } else {
+			document.getElementById('loading-spinner').style.display = 'none'; // Hide spinner on failure
+			alert("Failed to encode photo.");
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert("An error occurred while encoding the photo.");
+        document.getElementById('loading-spinner').style.display = 'none'; // Hide spinner on error
+    }
+});
+
+
+// Handle form submission for decoding photo
+document.getElementById('decode-photo-form').addEventListener('submit', async function(event) {
+	event.preventDefault(); // Prevent default form submission behavior
+
+	const formData = new FormData();
+	formData.append('file', document.getElementById('photo-decode-file').files[0]);
+
+	// Show loading bar
+	document.getElementById('loading-bar').style.display = 'block';
+
+	try {
+	    const response = await fetch('/decode-photo', { method: 'POST', body: formData });
+
+	    if (response.ok) {
+	        const result = await response.json();
+
+	        // Hide loading bar
+	        document.getElementById('loading-bar').style.display = 'none';
+
+	        // Show decoded message
+	        const decodedMessageDiv = document.getElementById('decoded-message');
+	        decodedMessageDiv.style.display = 'block';
+	        decodedMessageDiv.innerText = `Decoded Message: ${result.message}`;
+	    } else {
+	        alert("Failed to decode photo.");
+	        document.getElementById('loading-bar').style.display = 'none'; // Hide loading bar on failure
+	    }
+
+	} catch (error) {
+	    console.error('Error:', error);
+	    alert("An error occurred while decoding the photo.");
+	    document.getElementById('loading-bar').style.display = 'none'; // Hide loading bar on error
+	}
+});
+
+// Audio encoding
+document.getElementById('encode-audio-form').addEventListener('submit', async function(e) {
+  e.preventDefault(); // Prevent default form submission
+  const formData = new FormData(this);
+  formData.append('secretKey', document.getElementById('audio-key').value);
+
+  // Show loading spinner
+  document.getElementById('loading-spinner').style.display = 'block';
+
+  try {
+    const response = await fetch('/encode-audio', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success) {
+        // Create a download link
+        const a = document.createElement('a');
+        a.href = data.filePath;
+        a.download = 'encoded_audio.wav';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        // Show success pop-up
+        document.getElementById('success-popup').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('success-popup').style.display = 'none';
+        }, 3000);
+      } else {
+        alert("Failed to encode audio: " + data.error);
+      }
+    } else {
+      alert("Failed to encode audio. Server returned an error.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred while encoding the audio.");
+  } finally {
+    // Hide loading spinner
+    document.getElementById('loading-spinner').style.display = 'none';
+  }
+});
+
+// Handle decoding form submission
+document.getElementById('decode-audio-form').addEventListener('submit', async function(e) {
+  e.preventDefault(); // Prevent default form submission
+
+  const formData = new FormData(this);
+
+  // Show loading spinner
+  document.getElementById('loading-spinner').style.display = 'block';
+
+  try {
+    const response = await fetch('/decode-audio', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      
+      // Hide loading spinner
+      document.getElementById('loading-spinner').style.display = 'none';
+
+      // Display decoded message with black background
+      const decodedMessageDiv = document.getElementById('decoded-message-audio');
+      decodedMessageDiv.style.display = 'block';
+      decodedMessageDiv.style.backgroundColor = 'black';
+      decodedMessageDiv.style.color = 'white';
+      decodedMessageDiv.style.padding = '10px';
+      decodedMessageDiv.style.marginTop = '10px';
+      decodedMessageDiv.innerText = `Decoded Message: ${data.message}`;
+    } else {
+      throw new Error('Failed to decode audio');
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred while decoding the audio.");
+  } finally {
+    // Hide loading spinner
+    document.getElementById('loading-spinner').style.display = 'none';
+  }
+});
+
+// Handle video encoding form submission
+document.getElementById('encode-video-form').addEventListener('submit', async function(e) {
+    e.preventDefault();  // Prevent default form submission
+
+    const formData = new FormData(this);
+    formData.append('secretKey', document.getElementById('video-key').value);
+
+    // Show loading spinner
+    document.getElementById('video-loading-spinner').style.display = 'block';
+
+    try {
+        const response = await fetch('/encode-video', { method: 'POST', body: formData });
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'encoded_video.mp4';  // Default filename for download
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+            // Show success pop-up
+            document.getElementById('video-success-popup').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('video-success-popup').style.display = 'none';
+            }, 3000);
+        } else {
+            alert("Failed to encode video.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while encoding the video.");
+    } finally {
+        // Hide loading spinner
+        document.getElementById('video-loading-spinner').style.display = 'none';
+    }
+});
+
+// Handle video decoding form submission
+document.getElementById('decode-video-form').addEventListener('submit', async function(e) {
+    e.preventDefault();  // Prevent default form submission
+
+    const formData = new FormData(this);
+
+    // Show loading spinner
+    document.getElementById('video-loading-spinner').style.display = 'block';
+
+    try {
+        const response = await fetch('/decode-video', { method: 'POST', body: formData });
+        if (response.ok) {
+            const data = await response.json();
+
+            // Display decoded message with black background
+            const decodedMessageDiv = document.getElementById('video-decoded-message');
+            decodedMessageDiv.style.display = 'block';
+            decodedMessageDiv.style.backgroundColor = 'black';
+            decodedMessageDiv.style.color = 'white';
+            decodedMessageDiv.style.padding = '10px';
+            decodedMessageDiv.style.marginTop = '10px';
+            decodedMessageDiv.innerText = `Decoded Message: ${data.message}`;
+        } else {
+            alert("Failed to decode video.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while decoding the video.");
+    } finally {
+        // Hide loading spinner
+        document.getElementById('video-loading-spinner').style.display = 'none';
+    }
+});
+
+  </script>
+
+  </body>
+  </html>
